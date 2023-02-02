@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_log_view_form" model="ir.ui.view">
+        <field name="name">fleet.trip.log.form</field>
+        <field name="model">fleet.vehicle.tracking</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Trip">
+                <header>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                    </div>
+                    <h1>
+                        <field name="serial" />
+                    </h1>
+                    <notebook>
+                        <page string="Data" name="data">
+                            <group>
+                                <group>
+                                    <field name="gps_latitude" />
+                                    <field name="gps_longitude" />
+                                    <field name="gps_speed" />
+                                    <field name="gps_direction" />
+                                </group>
+                                <group>
+                                    <field name="machine_power" />
+                                    <field name="humidity" />
+                                    <field name="temperature" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="GPS" name="gps">
+                            <field name="geo_point" widget="geo_edit_map" />
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="provider" />
+                            <field name="date_created" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_log_view_tree" model="ir.ui.view">
+        <field name="name">fleet.trip.log.tree</field>
+        <field name="model">fleet.vehicle.tracking</field>
+        <field name="arch" type="xml">
+            <tree string="Tracking Logs" default_order="date_created desc">
+                <field name="serial" />
+                <field name="provider" />
+                <field name="date_created" />
+                <field name="temperature"/>
+                <field name="humidity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id='fleet_log_action' model='ir.actions.act_window'>
+        <field name="name">Tracking Logs</field>
+        <field name="res_model">fleet.vehicle.tracking</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Tracking Logs" id="fleet_logs"
+              action="fleet_log_action" sequence="10"/>
+
+    <record id="tracking_provider_form" model="ir.ui.view">
+            <field name="name">tracking.provider.tree</field>
+            <field name="model">tracking.provider</field>
+            <field name="arch" type="xml">
+                <form string="Tracking Provider">
+                    <sheet>
+                        <widget name="web_ribbon" title="Disabled" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'disabled')]}"/>
+                        <widget name="web_ribbon" title="Test Mode" bg_color="bg-warning" attrs="{'invisible': [('state', '!=', 'test')]}"/>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Name"/></h1>
+                        </div>
+                        <group>
+                            <group name="provider_state">
+                                <field name="provider" />
+                                <field name="geo_info_template"/>
+                                <field name="state" widget="radio" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Credentials" name="provider_credentials">
+                                <group name="provider">
+                                    <group attrs="{'invisible': [('provider', '!=', 'adsun')]}">
+                                        <field name="adsun_serv_api_url" attrs="{'required':[('provider', '=', 'adsun'), ('state', '!=', 'disabled')]}"/>
+                                        <field name="adsun_serv_page_code" attrs="{'required':[('provider', '=', 'adsun'), ('state', '!=', 'disabled')]}"/>
+                                        <field name="adsun_serv_user_name" attrs="{'required':[('provider', '=', 'adsun'), ('state', '!=', 'disabled')]}"/>
+                                        <field name="adsun_serv_password" attrs="{'required':[('provider', '=', 'adsun'), ('state', '!=', 'disabled')]}"/>
+                                    </group>
+                                    <group attrs="{'invisible': [('provider', '!=', 'efento')]}">
+                                        <field name="efento_api_base_url" attrs="{'required':[('provider', '=', 'efento'), ('state', '!=', 'disabled')]}"/>
+                                        <field name="efento_user_name" attrs="{'required':[('provider', '=', 'efento'), ('state', '!=', 'disabled')]}"/>
+                                        <field name="efento_password" attrs="{'required':[('provider', '=', 'efento'), ('state', '!=', 'disabled')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="tracking_provider_tree" model="ir.ui.view">
+        <field name="name">tracking.provider.tree</field>
+        <field name="model">tracking.provider</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="provider"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="tracking_provider_action" model="ir.actions.act_window">
+        <field name="name">tracking.provider.action</field>
+        <field name="name">Tracking Providers</field>
+        <field name="res_model">tracking.provider</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="tracking_provider_menu" action="tracking_provider_action" sequence="89"/>
+
+</odoo>

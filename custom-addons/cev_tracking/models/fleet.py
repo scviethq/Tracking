@@ -45,7 +45,7 @@ class FleetVehicleLogTracking(models.Model):
     def cron_update_data(self):
         # CALL GPS API Here to Collect Tracking Data
         self.env['tracking.provider'].update_tracking()
-        self.env['bus.bus'].sendone('map_monitoring', {
-            'type': 'map_monitoring',
-            'tracking_data': {}
-        })
+        # self.env['bus.bus'].sendone('map_monitoring', {
+        #     'type': 'map_monitoring',
+        #     'tracking_data': {}
+        # })

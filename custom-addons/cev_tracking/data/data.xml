@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_update_vehicle_tracking" model="ir.cron">
+        <field name="name">Update Vehicle Tracking</field>
+        <field name="model_id" ref="model_fleet_vehicle_tracking"/>
+        <field name="state">code</field>
+        <field name="active" eval="True"/>
+        <field name="code">model.cron_update_data()</field>
+        <field name='interval_number'>20</field>
+        <field name='interval_type'>minutes</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+    <record id="action_autovacuum_vehicle_tracking" model="ir.cron">
+        <field name="name">Autovacuum Vehicle Tracking</field>
+        <field name="model_id" ref="model_fleet_vehicle_tracking"/>
+        <field name="state">code</field>
+        <field name="active" eval="True"/>
+        <field name="code">model.autovacuum()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

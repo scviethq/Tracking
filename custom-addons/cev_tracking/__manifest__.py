@@ -11,7 +11,8 @@
     # "external_dependencies": {"python": ["openrouteservice"]},
     'data': [
         "views/tracking_provider.xml",
-        "security/"
+        "security/ir.model.access.csv",
+        "data/data.xml",
     ],
     'qweb': [],
     'demo': [],
